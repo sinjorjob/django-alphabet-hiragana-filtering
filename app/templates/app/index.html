@@ -1,0 +1,76 @@
+{% extends "../base.html" %}
+{% block content %}
+<h4>アルファベットによるフィルタリング</h4>
+<div class="row center">
+    <ul class="pagination justify-content-center blue">
+        {% for alphabet in alphabets %}
+        <li class="page-item"><a class="page-link white-text" href="{% url 'filter' alphabet %}">{{alphabet}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+<h4>ひらがなによるフィルタリング</h4>
+<div class="row center">
+    <ul class="pagination justify-content-center blue">
+        
+        {% for moji in hiragana %}
+        <li class="page-item"><a class="page-link white-text" href="{% url 'filter' moji %}">{{moji}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>書籍名</th>
+            <th>値段</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if object_list %}
+        {% for book in object_list %}
+        <tr>
+            <td>{{ book.name }}</td>
+            <td>{{ book.price }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        該当するレコードが１件もありません。
+        {% endif %}
+    </tbody>
+</table>
+<div class="row center">
+    <ul class="pagination">
+   
+            <ul class="pagination justify-content-center pagination-lg g-mt-28 g-mb-28">
+                <!-- 前へ の部分 -->
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+        
+                <!-- 数字の部分 -->
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num <= page_obj.number|add:5 and num >= page_obj.number|add:-5 %}
+        
+                        {% if page_obj.number == num %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+        
+                <!-- 次へ の部分 -->
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+    </ul>
+</div>
+{% endblock %}
