@@ -1,2 +1,6 @@
 # django-alphabet-hiragana-filtering
-filter by alphabet or hiragana
+
+see master branch.
+
+# demo 
+![demo](https://github.com/sinjorjob/django-alphabet-hiragana-filtering/blob/master/images/django-alphabet-hiragana-filter.gif) 
